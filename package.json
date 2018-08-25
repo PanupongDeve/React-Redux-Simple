@@ -1,0 +1,27 @@
+{
+  "name": "admin-snoptify",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.5",
+    "axios": "^0.18.0",
+    "react-dev-utils": "^5.0.0",
+    "react-icons": "^2.2.7",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-toastify": "^4.1.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.2.0",
+    "datatables.net": "^1.10.19",
+    "datatables.net-bs": "^1.10.19"
+
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
