@@ -3,27 +3,36 @@ import logo from './logo.svg';
 import './App.css';
 
 import Redux from '../../model/Redux';
+import languageHelper from '../../model/languageHelper';
 import ToastContainer from '../../components/ToastContainer';
+import * as LangActions from '../../model/Redux/actions/LangActions';
+import text from './App.text';
 
 const connect = Redux.getConnect();
 
 class App extends Component {
   onClick = () => {
-
     this.props.notify.success("Hello World");
   }
 
+  onSwitchLang = (lang) => {
+    this.props.switchLang(lang);
+  } 
+
   render() {
-    console.log(this.props);
+
+    const text_switched = languageHelper.switchLang(text);
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">{text_switched.title}</h1>
         </header>
         <p onClick={this.onClick} className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+          {text_switched.intro1} <code>src/App.js</code> {text_switched.intro2}
         </p>
+        <button onClick = { () => this.onSwitchLang('en')}>EN</button>
+        <button onClick = { () => this.onSwitchLang('th')}>TH</button>
         <ToastContainer />
       </div>
     );
@@ -37,4 +46,4 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, LangActions)(App);
