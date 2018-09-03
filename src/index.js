@@ -4,8 +4,8 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import 'react-toastify/dist/ReactToastify.css';
-import Redux from './model/Redux';
-import RouterHelper from './model/Router';
+import Redux from './class/Redux';
+import RouterHelper from './class/Router';
 
 const store = Redux.generateStore();
 const Provider = Redux.getProvider();

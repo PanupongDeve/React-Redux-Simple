@@ -1,3 +1,3 @@
-import Notify from '../model/Notify';
+import Notify from '../class/Notify';
 
 export default Notify.getComponent();
