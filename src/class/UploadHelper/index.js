@@ -1,7 +1,5 @@
 import FirebaseHelper from '../FirebaseHelper';
 
-
-
 class UploadHelper {
     constructor() {
         this.firebase = FirebaseHelper.getFirebase();
@@ -9,15 +7,15 @@ class UploadHelper {
         this.imageRef = null;
     }
 
-    async upload(file, filename) {
+    async upload(file, folder, filename) {
         this.storage = this.firebase.storage();
-        this.imageRef = this.storage.ref().child(`images/${filename}`);
+        this.imageRef = this.storage.ref().child(`${folder}/${filename}`);
         return await this.imageRef.put(file)
     }
 
-    async dowload(filename) {
+    async dowload(folder, filename) {
         this.storage = this.firebase.storage();
-        return await this.storage.ref().child(`images/${filename}`).getDownloadURL();
+        return await this.storage.ref().child(`${folder}/${filename}`).getDownloadURL();
     }
 }
 
