@@ -1,7 +1,12 @@
 import React, { Component } from "react";
 import ReactTableHelper from "../../class/ReactTable";
+import MLDesign from '../../class/MLDesign';
+import Styles from '../../class/MLDesign/styles';
 
 const ReactTable = ReactTableHelper.getComponent();
+const { Paper, Grid } = MLDesign.getComponent();
+const withStyles = MLDesign.getWithStyles();
+const styles = Styles.getStyles();
 
 const data = [
   {
@@ -35,12 +40,26 @@ const columns = [
   }
 ];
 
-export default class SimpleTable extends Component {
+class SimpleTable extends Component {
+  
   render() {
+    const { classes } = this.props;
+
     return (
-      <div>
-        <ReactTable data={data} columns={columns} />
+      <div className={classes.root}>
+        <Grid container spacing={24}>
+          <Grid item xs={1} />
+          <Grid item xs={10}>
+            <Paper className={classes.paper}>
+              <ReactTable data={data} columns={columns} />
+            </Paper>
+          </Grid>
+          <Grid item xs={1} />
+        </Grid>
       </div>
     );
   }
 }
+
+const TableWithStyle = withStyles(styles)(SimpleTable);
+export default TableWithStyle;
