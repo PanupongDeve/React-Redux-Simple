@@ -4,6 +4,7 @@ import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import 'react-toastify/dist/ReactToastify.css';
+
 import Redux from './class/Redux';
 import RouterHelper from './class/Router';
 
