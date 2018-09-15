@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
+import FirebaseHelper  from './class/FirebaseHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import Redux from './class/Redux';
 import RouterHelper from './class/Router';
 
+FirebaseHelper.plugin();
 const store = Redux.generateStore();
 const Provider = Redux.getProvider();
 const Router = RouterHelper.getRoutesComponent();

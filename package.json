@@ -12,6 +12,8 @@
     "draftjs-to-html": "^0.8.4",
     "firebase": "^5.4.2",
     "html-to-draftjs": "^1.4.0",
+    "moment": "^2.22.2",
+    "moment-timezone": "^0.5.21",
     "node-sass": "^4.9.3",
     "react": "^16.4.2",
     "react-dev-utils": "^5.0.0",
