@@ -46,7 +46,31 @@ class Model {
     }
   }
 
-  async getAll(functionReviceData) {
+  async getAll(functionExtended = false) {
+    try {
+      
+      const db = this.createDatabase();
+      const querySnapshot = await db.collection(this.collection).get();
+      let data = [];
+      querySnapshot.forEach((doc) => {
+        let Objectdata = {
+          documentId: doc.id
+        }
+        Objectdata = Object.assign(Objectdata, doc.data());
+        data.push(Objectdata);
+      });
+
+      if(functionExtended) {
+        data = await functionExtended(data);
+      }
+      
+      return data;
+    } catch (error) {
+      throw Promise.reject(error);
+    }
+  }
+
+  async getAllWithRealtime(functionReviceData, functionExtended = false) {
     try {
       const db = this.createDatabase();
       
@@ -59,7 +83,12 @@ class Model {
           Objectdata = Object.assign(Objectdata, doc.data());
           data.push(Objectdata);
         })
+
+        if(functionExtended) {
+          data = await functionExtended(data);
+        }
         functionReviceData(data);
+
       });
     
     } catch (error) {
