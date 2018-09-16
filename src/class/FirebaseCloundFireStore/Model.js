@@ -59,7 +59,6 @@ class Model {
           Objectdata = Object.assign(Objectdata, doc.data());
           data.push(Objectdata);
         })
-        console.log(data);
         functionReviceData(data);
       });
     
