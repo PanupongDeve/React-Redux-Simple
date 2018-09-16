@@ -10,8 +10,8 @@ export default class CloundFireStoreTest extends Component {
   }
 
   async componentDidMount() {
-    const data = await model.user.getAll();
-    await model.user.getLastKey();
+    await model.user.getAll();
+    
     
   }
 

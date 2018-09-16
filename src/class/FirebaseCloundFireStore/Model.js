@@ -46,7 +46,7 @@ class Model {
     }
   }
 
-  async getAll(functionExtended = false) {
+  async getAll(functionExtended) {
     try {
       
       const db = this.createDatabase();
@@ -61,9 +61,12 @@ class Model {
       });
 
       if(functionExtended) {
-        data = await functionExtended(data);
+        const runAsyncCallBack = async () => {
+          data = await functionExtended(data);
+        }
+        runAsyncCallBack();  
       }
-      
+
       return data;
     } catch (error) {
       throw Promise.reject(error);
@@ -73,9 +76,8 @@ class Model {
   async getAllWithRealtime(functionReviceData, functionExtended = false) {
     try {
       const db = this.createDatabase();
-      
-      db.collection(this.collection).onSnapshot((querySnapshot) => {
-        let data = [];
+      let data = [];
+      db.collection(this.collection).onSnapshot((querySnapshot) => {   
         querySnapshot.forEach((doc) => {
           let Objectdata = {
             documentId: doc.id
@@ -85,8 +87,12 @@ class Model {
         })
 
         if(functionExtended) {
-          data = await functionExtended(data);
+          const runAsyncCallBack = async () => {
+            data = await functionExtended(data);
+          }
+          runAsyncCallBack();  
         }
+        
         functionReviceData(data);
 
       });
