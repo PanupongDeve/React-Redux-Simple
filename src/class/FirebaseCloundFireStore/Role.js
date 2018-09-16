@@ -6,7 +6,7 @@ class Role extends Model {
         this.collection = 'Role';
     }
 
-    ทร
+    
 
     
 
