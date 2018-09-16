@@ -1,4 +1,4 @@
-import LangOTS from '../../DataHelper/ObjectToStore/LangOTS';
+import LangOTS from '../../class/DataHelper/ObjectToStore/LangOTS';
 
 const lang = (state = LangOTS.intialState(), action) => {
     switch (action.type) {

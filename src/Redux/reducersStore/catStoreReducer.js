@@ -1,4 +1,4 @@
-import CatOTS from '../../DataHelper/ObjectToStore/CatOTS';
+import CatOTS from '../../class/DataHelper/ObjectToStore/CatOTS';
 
 const catStore =   (state = CatOTS.intialState(), action) => {
     switch (action.type) {

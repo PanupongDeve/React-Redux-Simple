@@ -22,26 +22,43 @@ class Model {
     return db;
   }
 
-  async post(collection, data) {
+  async getLastKey() {
+    const db = this.createDatabase();
+    const querySnapshot = await db.collection(this.collection).orderBy("id", "desc").limit(1).get();
+    let key = 0;
+    querySnapshot.forEach(doc => {
+      key = doc.data().id;
+    })
+    return key;
+  }
+
+  async create(data) {
     try {
       const db = this.createDatabase();
       data.createAt = this.moment().format();
       data.updateAt = this.moment().format();
       data.status = this.ACTIVE;
-      const docRef = await db.collection(collection).add(data);
+      data.id = await this.getLastKey() + 1;
+      const docRef = await db.collection(this.collection).add(data);
      
     } catch (error) {
       throw error;
     }
   }
 
-  async get(url) {
+  async getAll() {
     try {
       const db = this.createDatabase();
-      db.collection(url).onSnapshot((querySnapshot) => {
-        let data = []
+      
+      db.collection(this.collection).onSnapshot((querySnapshot) => {
+        let data = [];
         querySnapshot.forEach((doc) => {
-            data.push(doc.data());
+          let Objectdata = {
+            documentId: doc.id
+          }
+          Objectdata = Object.assign(Objectdata, doc.data());
+          data.push(Objectdata);
+          //to save with dispatch
         })
         console.log(data);
       });
@@ -51,13 +68,25 @@ class Model {
     }
   }
 
-  async socket(url, reciveDataFunction) {
+  async getByDocumentId(documentId) {
     try {
       const db = this.createDatabase();
+      const docRef = await db.collection(this.collection).doc(documentId);
+      const doc = await docRef.get();
+      let objectData = {
+        documentId: doc.id
+      }
+
+      objectData = Object.assign(objectData, doc.data());
+      return objectData;
+
     } catch (error) {
       throw error;
     }
   }
+
+
+
 
   async patch(url, newData) {
     try {

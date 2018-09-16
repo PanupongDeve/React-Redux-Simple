@@ -6,8 +6,8 @@ import FirebaseHelper  from './class/FirebaseHelper';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import Redux from './class/Redux';
-import RouterHelper from './class/Router';
+import Redux from './Redux';
+import RouterHelper from './Router';
 
 FirebaseHelper.plugin();
 const store = Redux.generateStore();

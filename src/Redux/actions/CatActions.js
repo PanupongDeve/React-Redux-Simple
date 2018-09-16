@@ -1,5 +1,5 @@
-import CatService from '../../DataHelper/Services/CatService';
-import CatOTS from '../../DataHelper/ObjectToStore/CatOTS';
+import CatService from '../../class/DataHelper/Services/CatService';
+import CatOTS from '../../class/DataHelper/ObjectToStore/CatOTS';
 
 
 export const getCats = () => async (dispatch) => {

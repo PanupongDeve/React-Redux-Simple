@@ -1,2 +1,2 @@
-import Notify from '../../Notify'
+import Notify from '../../class/Notify'
 export default { notify: () => Notify.getCombineNotify() }

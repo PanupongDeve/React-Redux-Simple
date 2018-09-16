@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-import Redux from '../../class/Redux';
+import Redux from '../../Redux';
 import languageHelper from '../../class/languageHelper';
 import ToastContainer from '../../components/ToastContainer';
-import * as LangActions from '../../class/Redux/actions/LangActions';
+import * as LangActions from '../../Redux/actions/LangActions';
 import text from './App.text';
 
 const connect = Redux.getConnect();

@@ -6,13 +6,6 @@ class User extends Model {
         this.collection = 'User';
     }
 
-    async create(data) {
-        await this.post(this.collection, data);
-    }
-
-    async getAll() {
-        await this.get(this.collection)
-    }
 }
 
 export default new User();

@@ -1,5 +1,7 @@
 import FirebaseHelper from '../FirebaseHelper';
-import model from '../model';
+import model from '../FirebaseCloundFireStore';
+import role from '../../enums/role';
+
 
 
 class FirebaseAuth {
@@ -14,7 +16,7 @@ class FirebaseAuth {
                 email: email,
                 uid: response.user.uid
             }
-            this.saveUserProfileToDatabase(data);
+            await this.saveUserProfileToDatabase(data);
             return await this.isUser() ? true : false;
         } catch (error) {
             console.log(error);
@@ -26,10 +28,11 @@ class FirebaseAuth {
             const email = this.migrateToEmail(username);
             const response = await this.firebase.auth().createUserWithEmailAndPassword(email, password);
             const data = {
-                email: email,
-                uid: response.user.uid
+                username,
+                uid: response.user.uid,
+                role: role.CUSTOMER
             }
-            this.saveUserProfileToDatabase(data);
+            await this.saveUserProfileToDatabase(data);
             return await this.isUser() ? true : false;
         } catch (error) {
             console.log(error);
