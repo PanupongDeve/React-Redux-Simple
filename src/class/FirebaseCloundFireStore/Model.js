@@ -1,15 +1,14 @@
 import FirebaseHelper from "../FirebaseHelper";
 import moment from "moment";
 import status from '../../enums/status';
+import actions_status from '../../enums/actions_status'
 
-const { ACTIVE, DELETED } = status;
 
 class Model {
   constructor() {
     this.firebase = FirebaseHelper.getFirebase();
     this.moment = moment;
-    this.ACTIVE = ACTIVE;
-    this.DELETED = DELETED;
+  
   }
 
   createDatabase() {
@@ -35,18 +34,19 @@ class Model {
   async create(data) {
     try {
       const db = this.createDatabase();
-      data.createAt = this.moment().format();
-      data.updateAt = this.moment().format();
-      data.status = this.ACTIVE;
+      data.createdAt = this.moment().format();
+      data.updatedAt = this.moment().format();
+      data.status = status.ACTIVE;
       data.id = await this.getLastKey() + 1;
-      const docRef = await db.collection(this.collection).add(data);
+      await db.collection(this.collection).add(data);
+      return actions_status.SUCCESS;
      
     } catch (error) {
       throw error;
     }
   }
 
-  async getAll() {
+  async getAll(functionReviceData) {
     try {
       const db = this.createDatabase();
       
@@ -58,9 +58,9 @@ class Model {
           }
           Objectdata = Object.assign(Objectdata, doc.data());
           data.push(Objectdata);
-          //to save with dispatch
         })
         console.log(data);
+        functionReviceData(data);
       });
     
     } catch (error) {
@@ -85,36 +85,31 @@ class Model {
     }
   }
 
-
-
-
-  async patch(url, newData) {
+  async updateByDocumentId(documentId, editData) {
     try {
       const db = this.createDatabase();
-      const oldData = await this.get(url);
-      if (oldData.status === this.DELETED) {
-        throw "undefind";
-      }
-      const data = Object.assign({}, oldData, newData);
-      data.updateAt = this.moment().format();
-      data.status = this.ACTIVE;
+      editData.updatedAt = this.moment().format();
+      editData.status = status.ACTIVE;
 
-      return true;
+      await db.collection(this.collection).doc(documentId).update(editData);
+      return actions_status.SUCCESS;
+     
     } catch (error) {
       console.log("Error");
       throw error;
     }
   }
 
-  async delete(url) {
+  async deleteByDocumentId(documentId) {
     try {
       const db = this.createDatabase();
-      let oldData = await this.get(url);
-      if (oldData.status === this.DELETED) {
-        throw "undefind";
+      const deletedData = {
+        deletedAt : this.moment().format(),
+        status : status.DELETED
       }
-      oldData.status = this.DELETED;
-      oldData.deletedAt = this.moment().format();
+
+      await db.collection(this.collection).doc(documentId).update(deletedData);
+      return actions_status.SUCCESS;
     } catch (error) {
       console.log("Error");
       throw error;
