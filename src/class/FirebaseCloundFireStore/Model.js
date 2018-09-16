@@ -42,7 +42,7 @@ class Model {
       return actions_status.SUCCESS;
      
     } catch (error) {
-      throw error;
+      throw Promise.reject(error);
     }
   }
 
@@ -63,7 +63,7 @@ class Model {
       });
     
     } catch (error) {
-      throw error;
+      throw Promise.reject(error);
     }
   }
 
@@ -80,7 +80,7 @@ class Model {
       return objectData;
 
     } catch (error) {
-      throw error;
+      throw Promise.reject(error);
     }
   }
 
@@ -95,7 +95,7 @@ class Model {
      
     } catch (error) {
       console.log("Error");
-      throw error;
+      throw Promise.reject(error);
     }
   }
 
@@ -111,7 +111,7 @@ class Model {
       return actions_status.SUCCESS;
     } catch (error) {
       console.log("Error");
-      throw error;
+      throw Promise.reject(error);
     }
   }
 }
