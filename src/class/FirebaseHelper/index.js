@@ -2,12 +2,12 @@ import firebase from "firebase";
 class FirebaseHelper {
   constructor() {
     this.config = {
-      apiKey: "AIzaSyDHZNBG2O7BibDeOXgF2VZz_fBM4CRSdkY",
-      authDomain: "portfolio-ta.firebaseapp.com",
-      databaseURL: "https://portfolio-ta.firebaseio.com",
-      projectId: "portfolio-ta",
-      storageBucket: "portfolio-ta.appspot.com",
-      messagingSenderId: "516995854840"
+      apiKey: "",
+      authDomain: "",
+      databaseURL: "",
+      projectId: "",
+      storageBucket: "",
+      messagingSenderId: ""
     };
   }
 
