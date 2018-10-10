@@ -2,14 +2,14 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
-import FirebaseHelper  from './class/FirebaseHelper';
+import CloundDiary from './class/CloundDiary';
 
 import 'react-toastify/dist/ReactToastify.css';
 
 import Redux from './Redux';
 import RouterHelper from './Router';
+CloundDiary.getImage('1200px-Francois_Auguste_Biard_-_Fight_with_Polar_Bears.jpg');
 
-FirebaseHelper.plugin();
 const store = Redux.generateStore();
 const Provider = Redux.getProvider();
 const Router = RouterHelper.getRoutesComponent();

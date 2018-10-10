@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import model from "../../class/FirebaseCloundFireStore";
+
 
 export default class CloundFireStoreTest extends Component {
   constructor(props) {
@@ -9,11 +9,7 @@ export default class CloundFireStoreTest extends Component {
     };
   }
 
-  async componentDidMount() {
-    await model.user.getAll();
-    
-    
-  }
+
 
   onChange = (event) => {
     const { name, value } = event.target;
@@ -29,9 +25,6 @@ export default class CloundFireStoreTest extends Component {
         username: this.state.username
     }
 
-    //await model.user.create(data);
-    //await model.user.updateByDocumentId('vfWGWTxoOMGtP8ayM5Fp', data);
-    await model.user.deleteByDocumentId('vfWGWTxoOMGtP8ayM5Fp');
   }
 
   render() {
