@@ -1,11 +1,14 @@
 import Product from './Product';
-import Blog from './Blog';
-import Project from './Project';
+import Brand from './Brand';
+import Type from './Type';
 
-const model = {};
-model.product = Product;
-model.blog = Blog;
-model.project = Project;
+class Model {
+    constructor() {
+        this.product = new Product('/product');
+        this.brand = new Brand('/brand');
+        this.type = new Type('/type');
+    }
+}
 
 
-export default model;
+export default new Model();

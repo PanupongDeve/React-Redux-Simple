@@ -1,45 +1,59 @@
-import Model from './Model';
+import BaseModel from "./BaseModel";
+import model from "../FirebaseDatabase";
 
-class Product extends Model {
-    constructor() {
-        super();
-        this.ref = '/product/';
-    }
+export default class Product extends BaseModel {
+  constructor(ref) {
+    super(ref);
+  }
 
-    async create(data) {
-        return await this.post(this.ref, data);
-    }
+  async inCludeOptionalFields(products) {
+    products = await this.extendTypes(products);
+    products = await this.extendBrands(products);
+    return products;
+  }
 
-    async getAll() {
-        let products = await this.get(this.ref);
-        products = products.filter(product => product.status === "active");
-        return products
-    }
+  async inCludeOptionalField(product) {
+    product = await this.extendType(product);
+    product = await this.extendBrand(product);
+    return product;
+  }
 
-    async getWithSocket(reciveDataFunction) {
-        await this.socket(this.ref, reciveDataFunction);
-    }
+  extendTypes = async products => {
+    let types = await model.type.getAll();
+    products = products.map(product => {
+      types.forEach(type => {
+        if (Number(product.typeId) === Number(type.id)) {
+          product.type = type;
+        }
+      });
+      return product;
+    });
+    return products;
+  };
 
-    async getById(id) {
-        try {
-            const product = await this.get(`${this.ref}${id}`);
-            if(product.status === "deleted") {
-                throw "Undefind"
-            }
-            return product;
-        } catch (error) {
-            throw error
-        }     
-    }
+  extendType = async product => {
+    let type = await model.product.getById(product.typeId);
+    product.type = type;
+    return product;
+  };
 
-    async edit(id, data) {
-        return await this.patch(`${this.ref}${id}`, data);
-    }
+  extendBrands = async products => {
+    let brands = await model.brand.getAll();
 
-    async remove(id) {
-        await this.delete(`${this.ref}${id}`);
-    }
+    products = products.map(product => {
+      brands.forEach(brand => {
+        if (Number(product.brandId) === Number(brand.id)) {
+          product.brand = brand;
+        }
+      });
+      return product;
+    });
+    return products;
+  };
+
+  extendBrand = async product => {
+    let brand = await model.brand.getById(Number(product.brandId));
+    product.brand = brand;
+    return product;
+  };
 }
-
-
-export default new Product();
