@@ -8,11 +8,13 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import Redux from './Redux';
 import RouterHelper from './Router';
-CloundDiary.getImage('1200px-Francois_Auguste_Biard_-_Fight_with_Polar_Bears.jpg');
+import FirebaseHelper from './class/FirebaseHelper';
+// CloundDiary.getImage('1200px-Francois_Auguste_Biard_-_Fight_with_Polar_Bears.jpg');
 
 const store = Redux.generateStore();
 const Provider = Redux.getProvider();
 const Router = RouterHelper.getRoutesComponent();
+FirebaseHelper.plugin();
 
 class Root extends Component {
     render() {

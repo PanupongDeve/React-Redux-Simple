@@ -16,7 +16,7 @@ class BaseModel {
         return key;
     }
 
-    async post(data) {
+    async create(data) {
         data.createAt = this.moment().format();
         data.updateAt = this.moment().format();
         data.status = 'active';
@@ -24,8 +24,7 @@ class BaseModel {
             const key =  Number(await this.getLastKey())+1;
             data.id = key;
             
-            const result = await this.firebase.database().ref(`${this.ref}/${key}`).set(data);
-            console.log(result); 
+            await this.firebase.database().ref(`${this.ref}/${key}`).set(data);
             return true;  
         } catch (error) {
             throw error;
@@ -35,7 +34,7 @@ class BaseModel {
     async getAll(extend=false) {
         try {
             let snapshot = await this.firebase.database().ref(this.ref).once("value");
-            const data = await snapshot.val()|| [];
+            let data = await snapshot.val()|| [];
             data = extend ? this.inCludeOptionalFields(data) : data;
             return data; 
         } catch (error) {
@@ -58,7 +57,7 @@ class BaseModel {
     async getById(id, extend=false) {
         try {
             let snapshot = await this.firebase.database().ref(`${this.ref}/${id}`).once("value");
-            const data = await snapshot.val();
+            let data = await snapshot.val();
             data = extend ? this.inCludeOptionalField(data) : data;
             return data; 
         } catch (error) {
@@ -72,7 +71,7 @@ class BaseModel {
             if(oldData.status === "deleted"){
                 throw "undefind"
             }
-            const data = Object.assign({},oldData, newData);
+            let data = Object.assign({},oldData, newData);
             data.updateAt = this.moment().format();
             data.status = 'active';
             await this.firebase.database().ref(`${this.ref}/${id}`).set(data); 

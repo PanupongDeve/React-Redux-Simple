@@ -1,13 +1,12 @@
 import FirebaseHelper from "../FirebaseHelper";
 import moment from "moment";
-import status from '../../enums/status';
-import actions_status from '../../enums/actions_status'
 
 
-class Model {
-  constructor() {
+class BaseModel {
+  constructor(collection) {
     this.firebase = FirebaseHelper.getFirebase();
     this.moment = moment;
+    this.collection = collection;
   
   }
 
@@ -36,17 +35,17 @@ class Model {
       const db = this.createDatabase();
       data.createdAt = this.moment().format();
       data.updatedAt = this.moment().format();
-      data.status = status.ACTIVE;
+      data.status = 'ACTIVE';
       data.id = await this.getLastKey() + 1;
       await db.collection(this.collection).add(data);
-      return actions_status.SUCCESS;
+      return 'SUCCESS';
      
     } catch (error) {
       throw Promise.reject(error);
     }
   }
 
-  async getAll(functionExtended) {
+  async getAll(extend=false) {
     try {
       
       const db = this.createDatabase();
@@ -60,12 +59,14 @@ class Model {
         data.push(Objectdata);
       });
 
-      if(functionExtended) {
-        const runAsyncCallBack = async () => {
-          data = await functionExtended(data);
-        }
-        runAsyncCallBack();  
-      }
+      data = extend ? await this.inCludeOptionalFields(data) : data;
+
+      // if(extend) {
+      //   const runAsyncCallBack = async () => {
+      //     data = await functionExtended(data);
+      //   }
+      //   runAsyncCallBack();  
+      // }
 
       return data;
     } catch (error) {
@@ -73,11 +74,11 @@ class Model {
     }
   }
 
-  async getAllWithRealtime(functionReviceData, functionExtended = false) {
+  async getAllWithRealtime(functionReviceData, extend=false) {
     try {
       const db = this.createDatabase();
       let data = [];
-      db.collection(this.collection).onSnapshot((querySnapshot) => {   
+      db.collection(this.collection).onSnapshot(async (querySnapshot) => {   
         querySnapshot.forEach((doc) => {
           let Objectdata = {
             documentId: doc.id
@@ -85,13 +86,13 @@ class Model {
           Objectdata = Object.assign(Objectdata, doc.data());
           data.push(Objectdata);
         })
-
-        if(functionExtended) {
-          const runAsyncCallBack = async () => {
-            data = await functionExtended(data);
-          }
-          runAsyncCallBack();  
-        }
+        data = extend ? await this.inCludeOptionalFields(data) : data;
+        // if(functionExtended) {
+        //   const runAsyncCallBack = async () => {
+        //     data = await functionExtended(data);
+        //   }
+        //   runAsyncCallBack();  
+        // }
         
         functionReviceData(data);
 
@@ -102,7 +103,7 @@ class Model {
     }
   }
 
-  async getByDocumentId(documentId) {
+  async getByDocumentId(documentId, extend=false) {
     try {
       const db = this.createDatabase();
       const docRef = await db.collection(this.collection).doc(documentId);
@@ -112,6 +113,7 @@ class Model {
       }
 
       objectData = Object.assign(objectData, doc.data());
+      objectData = extend ? await this.inCludeOptionalField(objectData) : objectData;
       return objectData;
 
     } catch (error) {
@@ -123,10 +125,10 @@ class Model {
     try {
       const db = this.createDatabase();
       editData.updatedAt = this.moment().format();
-      editData.status = status.ACTIVE;
+      editData.status = 'ACTIVE';
 
       await db.collection(this.collection).doc(documentId).update(editData);
-      return actions_status.SUCCESS;
+      return 'SUCCESS';
      
     } catch (error) {
       console.log("Error");
@@ -139,11 +141,11 @@ class Model {
       const db = this.createDatabase();
       const deletedData = {
         deletedAt : this.moment().format(),
-        status : status.DELETED
+        status : 'DELETED'
       }
 
       await db.collection(this.collection).doc(documentId).update(deletedData);
-      return actions_status.SUCCESS;
+      return 'SUCCESS';
     } catch (error) {
       console.log("Error");
       throw Promise.reject(error);
@@ -151,4 +153,4 @@ class Model {
   }
 }
 
-export default Model;
+export default BaseModel;
