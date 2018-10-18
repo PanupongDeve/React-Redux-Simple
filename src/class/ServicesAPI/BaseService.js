@@ -10,11 +10,12 @@ export default class BaseService {
         this.RootURL = RootURL;
         this.domain = domain;
         this.socket = socket;
+        this.fetchAllUrl = `${this.domain}/fetchAll`;
     }
 
     async getAllWithSocket(functionReciveData) {
-        socket.emit(`${this.domain}/fetchAll`, 'fetchAll');
-        socket.on(`${this.domain}/findAll`, (data) => {
+        socket.emit(this.fetchAllUrl, 'fetchAll');
+        socket.on(this.fetchAllUrl, (data) => {
             functionReciveData(data);
         });
     }
