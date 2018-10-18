@@ -14,6 +14,10 @@ export default class CloundFireStoreTest extends Component {
       console.log(data);
     }
     await model.owner.getAllWithSocket(reciveData, true);
+    await model.owner.post({
+      fistName: 'Tester',
+      lastName: 'tester'
+    });
 
   }
 

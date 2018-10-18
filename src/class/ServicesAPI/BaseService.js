@@ -40,7 +40,7 @@ export default class BaseService {
 
     async post(data){
         try {
-            const res = await this.axios.post(`${this.RootURL}/${this.domain}`, data);
+            const res = await this.axios.post(`${this.RootURL}/${this.domain}/create`, data);
             return res.data;
         } catch (error) {
             console.log(error);
