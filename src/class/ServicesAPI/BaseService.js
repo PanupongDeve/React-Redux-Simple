@@ -1,13 +1,24 @@
 import axios from 'axios';
+import openSocket from 'socket.io-client';
 
-const RootURL = 'http://localhost';
+const RootURL = 'http://localhost:3004';
+const socket = openSocket('http://localhost:3004');
 
 export default class BaseService {
     constructor(domain) {
         this.axios = axios;
         this.RootURL = RootURL;
         this.domain = domain;
+        this.socket = socket;
     }
+
+    async getAllWithSocket(functionReciveData) {
+        socket.emit(`${this.domain}/fetchAll`, 'fetchAll');
+        socket.on(`${this.domain}/findAll`, (data) => {
+            functionReciveData(data);
+        });
+    }
+
     async get(){
         try {
             const res = await this.axios.get(`${this.RootURL}/${this.domain}`);

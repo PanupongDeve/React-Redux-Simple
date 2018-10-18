@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import model from '../../class/FirebaseCloundFireStore';
+import model from '../../class/ServicesAPI';
 
 export default class CloundFireStoreTest extends Component {
   constructor(props) {
@@ -13,7 +13,7 @@ export default class CloundFireStoreTest extends Component {
     const reciveData = (data) => {
       console.log(data);
     }
-    await model.product.getAllWithRealtime(reciveData, true);
+    await model.owner.getAllWithSocket(reciveData, true);
 
   }
 
