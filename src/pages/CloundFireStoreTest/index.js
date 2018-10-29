@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import model from '../../class/SocketClient';
+
 
 export default class CloundFireStoreTest extends Component {
   constructor(props) {
@@ -9,23 +9,8 @@ export default class CloundFireStoreTest extends Component {
     };
   }
 
-  async componentDidMount() {
-    const reciveData = (data) => {
-      console.log(data);
-    }
-    await model.owner.getAll(reciveData);
-    await model.owner.update({
-      id: '3',
-      data: {
-        firstName: 'Testerr',
-        lastName: 'TestBy'
-      }
-    })
-    // await model.owner.getAllWithSocket(reciveData, true);
-    // await model.owner.post({
-    //   fistName: 'Tester',
-    //   lastName: 'tester'
-    // });
+  componentDidMount() {
+
 
   }
 
