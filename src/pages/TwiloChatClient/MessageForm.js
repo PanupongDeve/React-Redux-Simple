@@ -11,9 +11,9 @@ class MessageForm extends Component {
     this.input.focus()
   }
 
-  handleFormSubmit = (event) => {
+  handleFormSubmit = async (event) => {
     event.preventDefault()
-    this.props.onMessageSend(this.input.value)
+    await this.props.onMessageSend(this.input.value)
     this.input.value = ""
   }
 

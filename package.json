@@ -29,7 +29,8 @@
     "react-toastify": "^4.1.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "twilio-chat": "^3.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
